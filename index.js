@@ -31,7 +31,11 @@ async function chatGpt(msg, bot) {
     bot.sendMessage(msg.chat.id, response, { parse_mode: 'Markdown' });
   } catch (err) {
     console.log(err)
-    bot.sendMessage(msg.chat.id, '😭出错了，我需要休息一下。');
+    let errMessage = ''
+    if(String(err).indexOf('session token has expired')!=-1){
+      errMessage = "session过期了"
+    }
+    bot.sendMessage(msg.chat.id, `😭出错了，我需要休息一下。${errMessage}`);
     throw err
   }
 }
